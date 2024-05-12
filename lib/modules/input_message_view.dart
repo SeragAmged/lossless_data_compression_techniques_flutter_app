@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class InputMessageView extends StatelessWidget {
   const InputMessageView({super.key});
 
+  static final _messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
@@ -18,9 +19,21 @@ class InputMessageView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
-              decoration: const InputDecoration(
+              controller: _messageController,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      AppCubit.get(context).compress(_messageController.text);
+                    },
+                    icon: const CircleAvatar(
+                      backgroundColor: Colors.red,
+                      child: Icon(
+                        Icons.send_rounded,
+                        color: Colors.white,
+                      ),
+                    )),
                 hintText: "Input message",
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
@@ -28,47 +41,49 @@ class InputMessageView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: MaterialButton(
-                    color: Colors.redAccent,
-                    onPressed: () => AppCubit.get(context).changeScreen(
-                      AnalysisScreen(
-                        model: AppCubit.get(context).analysisModel,
+            if (state is Loading)
+              const CircularProgressIndicator(
+                color: Colors.redAccent,
+              )
+            else if (AppCubit.get(context).model != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: MaterialButton(
+                      color: Colors.redAccent,
+                      onPressed: () => AppCubit.get(context).changeScreen(
+                        const TechniquesListView(),
                       ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Analyze",
-                        style: TextStyle(
-                          color: Colors.white,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Compress",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: MaterialButton(
-                    onPressed: () => AppCubit.get(context).changeScreen(
-                      TechniquesListView(
-                          model: AppCubit.get(context).compressionModel),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Compress",
-                        style: TextStyle(
-                          color: Colors.redAccent,
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: MaterialButton(
+                      onPressed: () => AppCubit.get(context).changeScreen(
+                        const AnalysisScreen(),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Analyze",
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
           ],
         );
       },

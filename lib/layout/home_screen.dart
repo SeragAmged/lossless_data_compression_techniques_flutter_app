@@ -23,7 +23,8 @@ class HomeScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        " Lossless Data Compression Techniques",
+                        " Lossless \nData Compression \nTechniques",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
