@@ -40,7 +40,7 @@ class AnalysisScreen extends StatelessWidget {
                 children: List<Widget>.generate(
                       titles.length,
                       (index) {
-                        if (values[index] != null) {
+                        // if (values[index] != null) 
                           return Row(
                             children: [
                               Text(
@@ -58,7 +58,7 @@ class AnalysisScreen extends StatelessWidget {
                               const SizedBox(height: 20),
                             ],
                           );
-                        }
+                        
                         return const SizedBox();
                       },
                     ) +

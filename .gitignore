@@ -41,3 +41,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+python_api/arithmetic_encode.py
+python_api/golomb_encode.py
+python_api/helper.py
+python_api/huffman_encode.py
+python_api/lossless_compression.py
+python_api/lzw_encode.py
+python_api/main.py
+python_api/run_length_encode.py
